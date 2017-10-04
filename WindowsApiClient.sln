@@ -76,14 +76,4 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FDFDE02B-7803-4AE5-BFD2-7B893B1B875D}
 	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 1
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://ibertic.visualstudio.com/
-		SccProjectUniqueName0 = WindowsApiClient\\WindowsApiClient.csproj
-		SccProjectName0 = WindowsApiClient
-		SccAuxPath0 = https://ibertic.visualstudio.com
-		SccLocalPath0 = WindowsApiClient
-		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-	EndGlobalSection
 EndGlobal

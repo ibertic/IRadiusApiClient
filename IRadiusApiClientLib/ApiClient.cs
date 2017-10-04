@@ -32,7 +32,6 @@ namespace Ibertic.Iradius.Api.Client
                 return PostActionWC<T>(this.Token, Method, ApiMethod, parameters);
             else
                 return PostActionWCQueryParams<T>(this.Token, Method, ApiMethod, parameters);
-            //return PostActionWR<T>(token, Method, ApiMethod, parameters);
         }
 
         private T PostActionWC<T>(string token, string Method, string ApiMethod, NameValueCollection parameters)
@@ -86,9 +85,7 @@ namespace Ibertic.Iradius.Api.Client
             {
                 var result = client.UploadValues(url, Method, new NameValueCollection());
                 res = Encoding.UTF8.GetString(result);
-                //res = client.UploadString(url, Method, postData);
                 r = Json.Decode<T>(res);
-                //r = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(res);
             }
             catch (Exception ex)
             {
