@@ -1,0 +1,93 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfIRadiusClient"
+        xmlns:Client="clr-namespace:Ibertic.Iradius.Api.Client;assembly=IRadiusApiClientLib"
+    xmlns:Client1="http://schemas.microsoft.com/xps/2005/06"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="WpfIRadiusClient.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Padding="10" Loaded="Window_Loaded" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FFC3DEEA" d:DesignWidth="452" d:DesignHeight="340">
+
+    <Grid d:IsLocked="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="19.5"/>
+            <RowDefinition Height="16.5"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Content="Button" Margin="176,30,0,169" Grid.Column="1" Grid.Row="6" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" d:IsLocked="True"/>
+        <ToolBar Height="35" VerticalAlignment="Top" Margin="0,0,5,0" Grid.ColumnSpan="4" Grid.RowSpan="2" d:IsLocked="True">
+            <Button x:Name="cmdConf"  Content="Configuración" Click="cmdConf_Click" />
+            <Button x:Name="cmdLoad" Visibility="Hidden" Content="Cargar" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Width="105" BorderBrush="#FF07E9F3" Click="cmdLoad_Click" d:IsHidden="True" d:IsLocked="True"/>
+
+            <Button x:Name="cmdConf_Copy"  Visibility="Hidden" Content="test" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" Width="105" BorderBrush="#FF07E9F3" Click="cmdConf_Copy_Click" d:IsHidden="True" d:IsLocked="True"/>
+
+
+        </ToolBar>
+        <ComboBox x:Name="cbxCustomers" ItemsSource="{Binding Elements, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name"  SelectedValuePath="Id" Grid.Row="3" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Column="1" SelectionChanged="cbxCustomers_SelectionChanged" d:IsLocked="True">
+            <ComboBox.DataContext>
+                <local:CustomersList/>
+            </ComboBox.DataContext>
+        </ComboBox>
+
+        <ComboBox x:Name="cbxHotspots" ItemsSource="{Binding Elements, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Description" SelectedValuePath="Id" Grid.Row="3" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Column="3" SelectionChanged="cbxHotspots_SelectionChanged" d:IsLocked="True">
+            <ComboBox.DataContext>
+                <local:HotspotList/>
+            </ComboBox.DataContext>
+        </ComboBox>
+
+        <ComboBox x:Name="cbxTypes" ItemsSource="{Binding Elements, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedValuePath="TypeId" Grid.Row="5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Column="1" StaysOpenOnEdit="True" SelectionChanged="cbxTypes_SelectionChanged" d:IsLocked="True">
+            <ComboBox.DataContext>
+                <local:TypesList/>
+            </ComboBox.DataContext>
+        </ComboBox>
+        <Label Content="Cliente" Grid.Row="3" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" d:IsLocked="True"/>
+        <Label Content="Tipo" Grid.Row="5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" d:IsLocked="True"/>
+        <Label Content="Hotspot" Grid.Row="3" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Column="2" d:IsLocked="True"/>
+        <xctk:IntegerUpDown x:Name="txtQuantity" Value="1" Grid.Row="5" Grid.Column="3" Minimum="1" Maximum="100" d:IsLocked="True"  />
+
+        <Button x:Name="cmdGenerate" Grid.Row="7" Grid.ColumnSpan="5" Content="Generar" FontSize="22" Click="cmdGenerate_Click" Padding="1,1,-3,1" d:IsLocked="True">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FFB9DDE8" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                    <GradientStop Color="#FF34C7F1" Offset="0.525"/>
+                    <GradientStop Color="#FFA1D9EA" Offset="0.543"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <DataGrid x:Name="grdCredentials"  ItemsSource="{Binding CredentialsResults, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="5" Grid.Row="9" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontSize="16" d:IsLocked="True" >
+            <DataGrid.Columns>
+
+            </DataGrid.Columns>
+            <DataGrid.DataContext>
+                <Client:GenerateCredentialsResult/>
+            </DataGrid.DataContext>
+
+        </DataGrid>
+    </Grid>
+
+</Window>

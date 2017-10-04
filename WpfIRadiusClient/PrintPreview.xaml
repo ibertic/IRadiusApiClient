@@ -1,0 +1,34 @@
+﻿<Window x:Name="window" x:Class="WpfIRadiusClient.PrintPreview"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfIRadiusClient"
+        mc:Ignorable="d"
+        Title="Impresión de credenciales de acceso" Height="771.076" Width="588.33" Loaded="Window_Loaded">
+    <Canvas>
+        <ToolBar Panel.ZIndex="10">
+            <Button  x:Name="cmdPrint" Background="LightSkyBlue" Content="Imprimir" Click="cmdPrint_Click" />
+            <Button x:Name="cmdClose" Background="LightSkyBlue" Content="Cerrar" Click="cmdClose_Click" />
+        </ToolBar>        
+    <WrapPanel x:Name="container" ItemHeight="184" ItemWidth="284">
+        
+        <!--<local:CredentialView HorizontalAlignment="Left" UserName="prueba" Password="asdasdasd" />
+        <local:CredentialView HorizontalAlignment="Left"  />
+        <local:CredentialView HorizontalAlignment="Left"  />
+        <local:CredentialView HorizontalAlignment="Left"  />
+        <local:CredentialView HorizontalAlignment="Left"  />
+        <local:CredentialView HorizontalAlignment="Left"  />
+        <local:CredentialView HorizontalAlignment="Left"  />-->
+
+
+    </WrapPanel>
+    </Canvas>
+    <!--<local:DragCanvas x:Name="Canvas" Width="200" Height="auto">
+        <Button Canvas.Left="25" Canvas.Top="50">Click Me!</Button>
+        <Rectangle Fill="Blue" Width="50" Height="50" Canvas.Right="30" Canvas.Bottom="40" />
+        <Image  Source="images/background.jpg" Stretch="UniformToFill" Margin="1" Width="{Binding Width, ElementName=Canvas}" Height="{Binding Height, ElementName=Canvas}" />
+    </local:DragCanvas>-->
+
+    <!--<local:CredentialView></local:CredentialView>-->
+</Window>
