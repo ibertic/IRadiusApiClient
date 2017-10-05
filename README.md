@@ -1,5 +1,5 @@
 # ![Logo](http://portal.iradius.es/CustomerFiles/Image/31) Project Description
-IRadiusApiClient está formado por tres proyectos desarrollados con c# en .NET que tienen como objetivo mostrar el accso de cliente a la API de IRadius. IRadius es la solución cloud de WiFi y Hotspots que permite la integración con redes sociales y aplicaciones y sistemas propios. De esta forma es posible la generación de credenciales de acceso a la red WiFi en base a parámetros propios como podrían ser el tiempo de estancia de un huésped, o el importe gastado por un cliente.
+IRadiusApiClient está formado por tres proyectos desarrollados con c# en .NET que tienen como objetivo mostrar el acceso de cliente a la API de IRadius. IRadius es la solución cloud de WiFi y Hotspots que permite la integración con redes sociales y aplicaciones y sistemas propios. De esta forma es posible la generación de credenciales de acceso a la red WiFi en base a parámetros propios como podrían ser el tiempo de estancia de un huésped, o el importe gastado por un cliente.
 
 Para acceder a la API de IRadius requiere un token válido generado por la plataforma de IRadius. puede consultar la información del producto en http://www.iradius.es
 
