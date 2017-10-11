@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ApiUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://api.iradius.es</Value>
+      <Value Profile="(Default)">https://api.iradius.es</Value>
     </Setting>
     <Setting Name="Token" Type="System.String" Scope="User">
       <Value Profile="(Default)">Input Valid Token</Value>

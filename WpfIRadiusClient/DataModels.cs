@@ -51,6 +51,15 @@ namespace WpfIRadiusClient
 
     }
 
+    public class AdvancedTypesList : ElementList<Ibertic.Iradius.Api.Client.InputCredentialType>
+    {
+
+    }
+
+    public class InputAttributesList : ElementList<Ibertic.Iradius.Api.Client.InputCredentialAttribute>
+    {
+    }
+
     /*
     public class CustomersList: INotifyPropertyChanged
     {

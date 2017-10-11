@@ -25,13 +25,14 @@ namespace WpfIRadiusClient
         public List<AvailableCustomers> Customers;
         public WpfIRadiusClient.SettingsManager sm;
         bool Loading = false;
+
         public MainWindow()
         {
             InitializeComponent();
             sm = new SettingsManager();
         }
+        
         #region Métodos
-
         private void IniLoad()
         {
             Loading = true;
@@ -55,11 +56,15 @@ namespace WpfIRadiusClient
                     cbxHotspots.SelectedValue = hid;
 
 
-                var tts = (WpfIRadiusClient.TypesList)cbxTypes.DataContext;
+                var tts = (WpfIRadiusClient.AdvancedTypesList)cbxTypes.DataContext;
                 var tid = sm.TypeId;
                 var t = (from T in tts.Elements where T.TypeId == tid select T).SingleOrDefault();
                 if (t != null)
                     cbxTypes.SelectedValue = tid;
+
+
+                if (cbxTypes.SelectedIndex >= 0)
+                    OnSelectedTypeChanged();
 
             }
             catch (Exception ex)
@@ -77,11 +82,20 @@ namespace WpfIRadiusClient
         private void OnSelectedCustomerChanged()
         {
             var i = (AvailableCustomers)cbxCustomers.SelectedItem;
-            var H = ApiClient.GetHotspots( int.Parse(i.Id));
+            var H = ApiClient.GetHotspots(int.Parse(i.Id));
             SetCbxDataSource<HotspotType>(cbxHotspots, H);
 
-            var T = ApiClient.GetTypes(int.Parse(i.Id));
-            SetCbxDataSource<CredentialType>(cbxTypes, T);
+            //var T = ApiClient.GetTypes(int.Parse(i.Id));
+            //SetCbxDataSource<CredentialType>(cbxTypes, T);
+            var T = ApiClient.GetAdvancedTypes(int.Parse(i.Id));
+            SetCbxDataSource<InputCredentialType>(cbxTypes, T);
+
+
+            //var p = new CredentialInput();
+            //p.TypeId = at[0].TypeId;
+            //p.HotSpotId = 
+
+
 
             sm.CustomerId = int.Parse(i.Id);
         }
@@ -89,15 +103,26 @@ namespace WpfIRadiusClient
         private void OnSelectedHotspotChanged()
         {
             var i = (HotspotType)cbxHotspots.SelectedItem;
-            if (i!=null)
-            sm.HotspotId = i.Id;
+            if (i != null)
+                sm.HotspotId = i.Id;
         }
 
         private void OnSelectedTypeChanged()
         {
             var i = (CredentialType)cbxTypes.SelectedItem;
-            if (i!= null)
-            sm.TypeId  = i.TypeId;
+            if (i != null)
+                sm.TypeId = i.TypeId;
+            var al = (InputAttributesList)grdAttributes.DataContext;
+
+            if (i is InputCredentialType ict)
+            {
+                var att = ict.Attributes;
+                var l = (from a in att select a.Value).ToList();
+                al.Elements = l;
+            }
+            else
+                al.Elements = null;
+
         }
 
         private void SetCbxDataSource<T>(ComboBox cbx, System.Collections.Generic.List<T> Elements)
@@ -108,16 +133,56 @@ namespace WpfIRadiusClient
                 cbx.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Metodo para generar varias credenciales agrupadas en un pedido sin personalizar los atributos
+        /// </summary>
         private void GenerateCredentials()
         {
             int CustomerId = Convert.ToInt32(cbxCustomers.SelectedValue);
             int HotspotId = Convert.ToInt32(cbxHotspots.SelectedValue);
-            int TypeId= Convert.ToInt32(cbxTypes.SelectedValue);
-            int Quantity= Convert.ToInt32(txtQuantity.Value.Value);
+            int TypeId = Convert.ToInt32(cbxTypes.SelectedValue);
+            int Quantity = Convert.ToInt32(txtQuantity.Value.Value);
             var r = ApiClient.GenerateCredentials(CustomerId, HotspotId, TypeId, Quantity);
             grdCredentials.DataContext = r;
             var p = new Printing();
             p.PrintCredential(r);
+        }
+
+        /// <summary>
+        /// Método para generar una credencial con atributos personalizados
+        /// </summary>
+        private void GenerateSingleCredential()
+        {
+            int CustomerId = Convert.ToInt32(cbxCustomers.SelectedValue);
+            int HotspotId = Convert.ToInt32(cbxHotspots.SelectedValue);
+            int TypeId = Convert.ToInt32(cbxTypes.SelectedValue);
+            int Quantity = Convert.ToInt32(txtQuantity.Value.Value);
+
+            var p = new CredentialInput();
+            p.CustomerId = CustomerId;
+            p.HotSpotId = HotspotId;
+            p.TypeId = TypeId;
+            p.Field1 = "TEST";
+
+            var al = (InputAttributesList)grdAttributes.DataContext;
+            if (al!=null && al.Elements!= null)
+                {
+                p.InputAttributes = al.Elements;
+            }
+
+            try
+            {
+                var r = ApiClient.GenerateCredential(p);
+                grdCredentials.DataContext = r;
+                var print = new Printing();
+                print.PrintCredential(r);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                //throw;
+            }
+            
         }
         #endregion
 
@@ -172,7 +237,8 @@ namespace WpfIRadiusClient
 
         private void cmdGenerate_Click(object sender, RoutedEventArgs e)
         {
-            GenerateCredentials();
+            //GenerateCredentials();
+            GenerateSingleCredential();
         }
 
         private void cmdConf_Copy_Click(object sender, RoutedEventArgs e)

@@ -192,6 +192,21 @@ namespace Ibertic.Iradius.Api.Client
             return r;
         }
 
+        public List<InputCredentialType> GetAdvancedTypes(int CustomerId)
+        {
+            var p = new NameValueCollection() { { "CustomerId", CustomerId.ToString() } };
+            List<InputCredentialType> r = null;
+            try
+            {
+                r = PostAction<List<InputCredentialType>>("POST", "api/v100/AdvancedTypes", p);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return r;
+        }
+
         public GenerateCredentialsResult GenerateCredentials(int CustomerId, int HotspotId, int TypeId, int Quantity)
         {
             string action = "api/v100/GenerateCredentials";
@@ -211,6 +226,33 @@ namespace Ibertic.Iradius.Api.Client
             }
             return r;
         }
+
+
+
+        public GenerateCredentialsResult GenerateCredential(CredentialInput Input)
+        {
+            string action = "api/v100/GenerateCredential";
+            //var parameters = new NameValueCollection();
+            var parameters = Input.GetParameters();
+
+            //parameters.Add("Quantity",   Quantity.ToString());
+            //parameters.Add("TypeId", TypeId.ToString());
+            //parameters.Add("CustomerId", CustomerId.ToString());
+            //parameters.Add("HotSpotId", HotspotId.ToString());
+            GenerateCredentialsResult r = null;
+            try
+            {
+                r = PostAction<GenerateCredentialsResult>("POST", action, parameters);
+            }
+            catch (Exception ex)
+            {
+
+                
+                throw ex;
+            }
+            return r;
+        }
+
         #endregion
     }
 }

@@ -25,7 +25,7 @@ namespace WpfIRadiusClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://api.iradius.es")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://api.iradius.es")]
         public string ApiUrl {
             get {
                 return ((string)(this["ApiUrl"]));
